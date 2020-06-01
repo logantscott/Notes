@@ -22,5 +22,7 @@
     "jest": "^26.0.1",
     "nodemon": "^2.0.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "minimist": "^1.2.5"
+  }
 }
