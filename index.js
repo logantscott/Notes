@@ -1,17 +1,22 @@
-const { parse, valid, Input } = require('./lib/input');
-const { execute, Notes } = require('./lib/notes');
+// const { parse, valid, Input } = require('./lib/input');
+// const { execute, Notes } = require('./lib/notes');
 
-// console.log(parse(process.argv));
+// const action = new Input(process.argv);
 
-// use parse to create an action from process.argv
-// use valid to check if it is a valid action
-// -> if valid execute
-// -> otherwise show error
+// if(action.valid()) Notes.execute(action);
 
-//const action = parse(process.argv);
+// else console.log('Invalid command');
+
+const mongoose = require('mongoose');
+const { Input } = require('./lib/input');
+const Notes = require('./lib/models/Notes');
+
+mongoose.connect('mongodb://localhost:27017/play', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
 const action = new Input(process.argv);
-// console.log('action:', action);
-// if(action.valid()) execute(action);
-if(action.valid()) Notes.execute(action);
-
+if(action.valid()) Notes.execute(action)
+  .then(() => mongoose.connection.close());
 else console.log('Invalid command');
