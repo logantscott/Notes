@@ -9,8 +9,9 @@ const { execute, Notes } = require('./lib/notes');
 // -> otherwise show error
 
 //const action = parse(process.argv);
-const action = Input.parse(process.argv);
-const isValid = valid(action);
+const action = new Input(process.argv);
+// console.log('action:', action);
+// if(action.valid()) execute(action);
+if(action.valid()) Notes.execute(action);
 
-if(isValid) execute(action);
 else console.log('Invalid command');
