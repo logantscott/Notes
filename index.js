@@ -1,5 +1,5 @@
-const { parse, valid } = require('./lib/input');
-const { execute } = require('./lib/notes');
+const { parse, valid, Input } = require('./lib/input');
+const { execute, Notes } = require('./lib/notes');
 
 // console.log(parse(process.argv));
 
@@ -8,8 +8,10 @@ const { execute } = require('./lib/notes');
 // -> if valid execute
 // -> otherwise show error
 
-const action = parse(process.argv);
-const isValid = valid(action);
+//const action = parse(process.argv);
+const action = new Input(process.argv);
+// console.log('action:', action);
+// if(action.valid()) execute(action);
+if(action.valid()) Notes.execute(action);
 
-if(isValid) execute(action);
 else console.log('Invalid command');
