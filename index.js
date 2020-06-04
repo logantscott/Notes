@@ -1,8 +1,6 @@
 const { parse, valid, Input } = require('./lib/input');
 const { execute, Notes } = require('./lib/notes');
 
-// console.log(parse(process.argv));
-
 // use parse to create an action from process.argv
 // use valid to check if it is a valid action
 // -> if valid execute
