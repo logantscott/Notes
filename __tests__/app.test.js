@@ -100,9 +100,22 @@ describe('app routes', () => {
     });
   });
 
-  // it('test the delete route - delete one', () => {
-  //   return request(app)
-  //   .delete('/note')
-  //   .send({})
-  // });
+  it('test the delete route - delete one', async () => {
+    const testNote = await request(app)
+    .post('/note')
+    .send({
+      text: 'My note getting deleted'
+    });
+
+    return request(app)
+    .delete(`/note/${testNote.body._id}`)
+    .send()
+    .then(res => {
+      expect(res.body).toEqual({
+        _id: expect.anything(),
+        text: 'My note getting deleted',
+        __v: 0
+      });
+    });
+  });
 });
