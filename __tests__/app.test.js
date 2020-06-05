@@ -37,21 +37,67 @@ describe('app routes', () => {
           _id: expect.anything(),
           text: 'My first note',
           __v: 0
-        })
-      })
+        });
+      });
   });
 
-  // it('test the read route - find one', () => {
-  //   return request(app)
-  //   .get('/note')
-  //   .send({})
-  // });
+  it('test the read route - find one', () => {
+    let testId;
 
-  // it('test the read route - find all', () => {
-  //   return request(app)
-  //   .get('/notes')
-  //   .send({})
-  // });
+    request(app)
+      .post('/note')
+      .send({
+        text: 'My first note'
+      })
+      .then(res => {
+        // get the id here
+        testId = res.body._id;
+        console.log(testId);
+      });
+
+
+    return request(app)
+    .get('/note')
+    .send({
+        _id: testId
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          text: 'My first note',
+          __v: 0
+        });
+      });
+  });
+
+  it('test the read route - find all', () => {
+    let testId;
+
+    request(app)
+      .post('/note')
+      .send({
+        text: 'My first note'
+      })
+      .then(res => {
+        // get the id here
+        testId = res.body._id;
+        console.log(testId);
+      });
+
+
+    return request(app)
+    .get('/notes')
+    .send({
+        _id: testId
+      })
+      .then(res => {
+        expect(res.body).toEqual([{
+          _id: expect.anything(),
+          text: 'My first note',
+          __v: 0
+        }]);
+      });
+  });
 
   // it('test the update route', () => {
   //   return request(app)
