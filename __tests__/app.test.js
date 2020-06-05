@@ -41,26 +41,17 @@ describe('app routes', () => {
       });
   });
 
-  it('test the read route - find one', () => {
-    let testId;
-
-    request(app)
+  it('test the read route - find one', async() => {
+    const testNote = await request(app)
       .post('/note')
       .send({
         text: 'My first note'
-      })
-      .then(res => {
-        // get the id here
-        testId = res.body._id;
-        console.log(testId);
       });
 
 
     return request(app)
-    .get('/note')
-    .send({
-        _id: testId
-      })
+    .get(`/note/${testNote.body._id}`)
+    .send()
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
@@ -70,26 +61,17 @@ describe('app routes', () => {
       });
   });
 
-  it('test the read route - find all', () => {
-    let testId;
-
-    request(app)
+  it('test the read route - find all', async() => {
+    await request(app)
       .post('/note')
       .send({
         text: 'My first note'
-      })
-      .then(res => {
-        // get the id here
-        testId = res.body._id;
-        console.log(testId);
       });
 
 
     return request(app)
     .get('/notes')
-    .send({
-        _id: testId
-      })
+    .send()
       .then(res => {
         expect(res.body).toEqual([{
           _id: expect.anything(),
