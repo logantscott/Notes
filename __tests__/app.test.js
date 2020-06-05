@@ -52,13 +52,13 @@ describe('app routes', () => {
     return request(app)
     .get(`/note/${testNote.body._id}`)
     .send()
-      .then(res => {
-        expect(res.body).toEqual({
-          _id: expect.anything(),
-          text: 'My first note',
-          __v: 0
-        });
+    .then(res => {
+      expect(res.body).toEqual({
+        _id: expect.anything(),
+        text: 'My first note',
+        __v: 0
       });
+    });
   });
 
   it('test the read route - find all', async() => {
@@ -81,11 +81,24 @@ describe('app routes', () => {
       });
   });
 
-  // it('test the update route', () => {
-  //   return request(app)
-  //   .patch('/note')
-  //   .send({})
-  // });
+  it('test the update route', async() => {
+    const testNote = await request(app)
+      .post('/note')
+      .send({
+        text: 'My first note'
+      });
+
+    return request(app)
+    .patch(`/note/${testNote.body._id}`)
+    .send({ text: 'My udpated note lol' })
+    .then(res => {
+      expect(res.body).toEqual({
+        _id: expect.anything(),
+        text: 'My udpated note lol',
+        __v: 0
+      });
+    });
+  });
 
   // it('test the delete route - delete one', () => {
   //   return request(app)
